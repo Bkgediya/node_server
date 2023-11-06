@@ -31,6 +31,21 @@ COPY . .
 # Define the command to start your development environment.
 CMD ["npm", "build"]
 
+# Define the production stage.
+FROM base AS prod
+
+# Download dependencies as a separate step.
+RUN npm install
+
+# Run the application as a non-root user.
+USER node
+
+# Copy the rest of the source files into the image.
+COPY . .
+
+# Define the command to start your development environment.
+CMD ["npm", "build"]
+
 # Define the test stage.
 FROM base AS test
 
